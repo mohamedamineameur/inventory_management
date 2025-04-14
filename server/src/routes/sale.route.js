@@ -1,9 +1,10 @@
-import {creatSale, getSales, updateSale, deleteSale} from '../controllers/sale.controller.js';
+import {createSale, getSales, updateSale, deleteSale} from '../controllers/sale.controller.js';
 import { Router } from 'express';
 import { salePolicy } from '../policies/sale.policy.js';
+import { saleValidation } from '../validations/sale.validation.js';
 
 const saleRouter = Router();
-saleRouter.post("/", salePolicy.create, creatSale);
+saleRouter.post("/", salePolicy.create, saleValidation, createSale);
 saleRouter.get("/", salePolicy.get, getSales);
 saleRouter.patch("/:id", salePolicy.update, updateSale);
 saleRouter.delete("/:id", salePolicy.deleteUser, deleteSale);
