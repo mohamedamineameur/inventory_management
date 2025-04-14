@@ -1,5 +1,5 @@
 import {Item, Category} from "../models/index.model.js";
-import storeFileAndReturnName from "../utils/storeFileAndReturnName.js";
+import storeFileAndReturnName from "../upload.js";
 
 export const createItem = async (req, res) => {
     const { name, description, price, categoryId, file } = req.body;

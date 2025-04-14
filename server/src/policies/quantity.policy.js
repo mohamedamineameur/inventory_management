@@ -1,4 +1,4 @@
-import { requireRole } from "./policy";
+import { requireRole } from "./policy.js";
 
 export const quantityPolicy = {
     create: () => requireRole("management"),

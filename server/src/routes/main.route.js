@@ -1,9 +1,9 @@
-import saleItemRouter from "./sale-item.route";
-import saleRouter from "./sale.route";
-import itemRouter from "./item.route";
-import userRouter from "./user.route";
-import quantityRouter from "./quantity.route";
-import categoryRouter from "./category.route";
+import saleItemRouter from "./sale-item.route.js";
+import saleRouter from "./sale.route.js";
+import itemRouter from "./item.route.js";
+import userRouter from "./user.route.js";
+import quantityRouter from "./quantity.route.js";
+import categoryRouter from "./category.route.js";
 import { Router } from "express";
 
 const mainRouter = Router();
