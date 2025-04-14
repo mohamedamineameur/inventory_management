@@ -13,7 +13,7 @@ if (!fs.existsSync(uploadDir)) {
  * @param {Express.Multer.File} file - Le fichier reçu via multer.
  * @returns {string} - Le nom de fichier unique enregistré.
  */
-export function storeFileAndReturnName(file) {
+export default function storeFileAndReturnName(file) {
     if (!file || !file.buffer || !file.originalname) {
         throw new Error("Fichier invalide");
     }
