@@ -1,0 +1,6 @@
+**/.env
+**/uploads/
+**/*.sqlite
+**/node_modules/
+**/dist/
+
