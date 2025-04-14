@@ -1,7 +1,6 @@
 import { database } from "../database/database.js";
 import { DataTypes } from "sequelize";
 
-// Ensure the database connection is established
 if (!database) {
     throw new Error("Database connection is not initialized. Please check your database configuration.");
 }
