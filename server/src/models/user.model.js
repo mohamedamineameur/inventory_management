@@ -24,7 +24,7 @@ export const User = database.define("User", {
         allowNull: false,
     },
     role: {
-        type: DataTypes.ENUM("admin", "user"),
+        type: DataTypes.ENUM("admin", "user", "management"),
         allowNull: false,
     }
 }, {
