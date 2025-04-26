@@ -1,7 +1,12 @@
 import { User } from "../models/index.model.js";
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+dotenv.config();
+const { JWT_SECRET } = process.env;
 
 const policy = async (req, res, role, next) => {
   try {
+
     const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({ message: "No token provided" });

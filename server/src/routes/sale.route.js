@@ -4,8 +4,8 @@ import { salePolicy } from '../policies/sale.policy.js';
 import { saleValidation } from '../validations/sale.validation.js';
 
 const saleRouter = Router();
-saleRouter.post("/", salePolicy.create, saleValidation, createSale);
-saleRouter.get("/", salePolicy.get, getSales);
-saleRouter.patch("/:id", salePolicy.update, updateSale);
-saleRouter.delete("/:id", salePolicy.deleteUser, deleteSale);
+saleRouter.post("/", salePolicy.create(), createSale);
+saleRouter.get("/", salePolicy.get(), getSales);
+saleRouter.patch("/:id", salePolicy.update(), updateSale);
+saleRouter.delete("/:id", salePolicy.deleteUser(), deleteSale);
 export default saleRouter;
