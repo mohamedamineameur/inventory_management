@@ -2,17 +2,15 @@ import {User} from "../models/index.model.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Faker } from "@faker-js/faker";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
 const { saltRounds } = process.env;
 
 export const createUser = async (req, res) => {
-  const faker = new Faker();
   const user = {
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
+    username: req.body.username ,
+    password: req.body.password,
     role: req.body.role || "user",
   };
   try {
@@ -26,7 +24,7 @@ export const createUser = async (req, res) => {
     });
     return res
       .status(201)
-      .json({ message: "User created successfully", user: user });
+      .json({ message: "User created successfully", user: {id:newUser.id, username:newUser.username, role:newUser.role} });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -89,7 +87,7 @@ export const me = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    return res.status(200).json(meUser);
+    return res.status(200).json({user: meUser});
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });
   }
@@ -111,19 +109,35 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, password, role } = req.body;
+  let updatedUser
+
+  if(req.body.username) {
+    updatedUser = {
+      username: req.body.username,
+    };
+  }
+  if(req.body.password) {
+    const hashedPassword = await bcrypt.hash(req.body.password, parseInt(saltRounds));
+    updatedUser = {
+      password: hashedPassword,
+    };
+  }
+  if(req.body.role) {
+    updatedUser = {
+      role: req.body.role,
+    };
+  }
   try {
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const hashedPassword = await bcrypt.hash(password, parseInt(saltRounds));
+    
     await user.update({
-      username,
-      password: hashedPassword,
-      role,
+      ...updatedUser,
     });
-    return res.status(200).json({ message: "User updated successfully", user });
+    await user.save();
+    return res.status(200).json({ message: "User updated successfully", user: {id:user.id, username:user.username, role:user.role} });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

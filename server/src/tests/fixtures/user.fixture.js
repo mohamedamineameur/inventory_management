@@ -4,14 +4,15 @@ import dotenv from "dotenv";
 dotenv.config();
 const saltRounds = parseInt(process.env.saltRounds) || 10;
 
+
+export const userFixture = async (username) => {
+
 const user = {
-    username: "testuser",
+    username: username || "testuser",
     password: "testpassword",
     role: "admin",
     };
 const hashedPassword = await bycrypt.hash(user.password, saltRounds);
-
-export const userFixture = async () => {
     const newUser = await User.create({
         ...user,
         password: hashedPassword,
