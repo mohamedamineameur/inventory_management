@@ -1,13 +1,10 @@
-import { Category } from "../../models/index.model.js";
+// category.fixture.js
+import { Category } from "../../models/category.model.js"; // ✅ très important
 
-const category = {
-    name: "testCategory",
-};
-
-const newCategory = await Category.create({
-    ...category,
-});
-export const categoryFixture = {
+export const createCategoryFixture = async () => {
+  const newCategory = await Category.create({ name: "testCategory" });
+  return {
     id: newCategory.id,
     name: newCategory.name,
+  };
 };

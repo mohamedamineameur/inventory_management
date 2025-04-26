@@ -1,12 +1,15 @@
+import { el } from "@faker-js/faker";
 import {Item, Category} from "../models/index.model.js";
 import storeFileAndReturnName from "../upload.js";
 
 export const createItem = async (req, res) => {
     const { name, description, price, categoryId, file } = req.body;
+    let pictureURL = null;
     if (file) {
-        const pictureURL = await storeFileAndReturnName(file);
-        req.body.pictureURL = pictureURL;
+        const pictureURLs = await storeFileAndReturnName(file);
+        pictureURL = pictureURLs;
     }
+
 
     const category = await Category.findByPk(categoryId);
     if (!category) {

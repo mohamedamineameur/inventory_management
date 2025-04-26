@@ -7,11 +7,11 @@ const userRouter = Router();
 
 userRouter.post("/login", loginUser);
 userRouter.post("/logout", logoutUser);
-userRouter.post("/", userPolicy.create, userValidation, createUser);
-userRouter.get("/", userPolicy.get, getUsers);
+userRouter.post("/", userPolicy.create(), userValidation, createUser);
+userRouter.get("/", userPolicy.get(), getUsers);
 userRouter.get("/me", me);
-userRouter.patch("/:id", userPolicy.update, updateUser);
-userRouter.delete("/:id", userPolicy.deleteUser, deleteUser);
+userRouter.patch("/:id", userPolicy.update(), updateUser);
+userRouter.delete("/:id", userPolicy.deleteUser(), deleteUser);
 
 export default userRouter;
 

@@ -1,11 +1,12 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize"
 
-export const database = new Sequelize( {
-    host: "localhost",
-    dialect: "sqlite",
-    storage: "./database.sqlite",
-    logging: true,
-    define: {
-        timestamps: false,
-    },
-});
+const isTest = process.env.NODE_ENV === 'test'
+
+export const database = new Sequelize({
+  dialect: 'sqlite',
+  storage: isTest ? ':memory:' : './database.sqlite', // Utilisation de la mémoire vive pour les tests
+  logging: false,
+  define: {
+    timestamps: false,
+  },
+})

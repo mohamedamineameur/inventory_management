@@ -1,24 +1,27 @@
 import { Sale, User } from "../models/index.model.js";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+
+dotenv.config();
+const { JWT_SECRET } = process.env;
 
 export const createSale = async (req, res) => {
-  const { itemId, quantity } = req.body;
-
+  
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
-    }
-
-    const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await User.findByPk(decoded.id);
+     const token = req.cookies.token;
+        if (!token) {
+          return res.status(401).json({ message: "No token provided" });
+        }
+    
+        const decoded = jwt.verify(token, JWT_SECRET);
+        const user = await User.findByPk(decoded.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const newSale = await Sale.create({
-      userId,
-      itemId,
-      quantity,
+      userId: user.id,     
     });
 
     return res.status(201).json({
