@@ -1,37 +1,35 @@
-import { Sale, User } from "../models/index.model.js";
-import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
+import { Sale, User } from '../models/index.model.js'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
 
-
-dotenv.config();
-const { JWT_SECRET } = process.env;
+dotenv.config()
+const { JWT_SECRET } = process.env
 
 export const createSale = async (req, res) => {
-  
   try {
-     const token = req.cookies.token;
-        if (!token) {
-          return res.status(401).json({ message: "No token provided" });
-        }
-    
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await User.findByPk(decoded.id);
+    const token = req.cookies.token
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' })
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET)
+    const user = await User.findByPk(decoded.id)
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' })
     }
 
     const newSale = await Sale.create({
-      userId: user.id,     
-    });
+      userId: user.id
+    })
 
     return res.status(201).json({
-      message: "Sale created successfully",
-      sale: newSale,
-    });
+      message: 'Sale created successfully',
+      sale: newSale
+    })
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message })
   }
-};
+}
 
 export const getSales = async (req, res) => {
   try {
@@ -39,52 +37,52 @@ export const getSales = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["username"],
-        },
-      ],
-    });
-    return res.status(200).json(sales);
+          attributes: ['username']
+        }
+      ]
+    })
+    return res.status(200).json(sales)
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message })
   }
-};
+}
 
 export const updateSale = async (req, res) => {
-  const { id } = req.params;
-  const { itemId, quantity } = req.body;
+  const { id } = req.params
+  const { itemId, quantity } = req.body
 
   try {
-    const sale = await Sale.findByPk(id);
+    const sale = await Sale.findByPk(id)
     if (!sale) {
-      return res.status(404).json({ message: "Sale not found" });
+      return res.status(404).json({ message: 'Sale not found' })
     }
 
-    sale.itemId = itemId || sale.itemId;
-    sale.quantity = quantity || sale.quantity;
+    sale.itemId = itemId || sale.itemId
+    sale.quantity = quantity || sale.quantity
 
-    await sale.save();
+    await sale.save()
 
     return res.status(200).json({
-      message: "Sale updated successfully",
-      sale,
-    });
+      message: 'Sale updated successfully',
+      sale
+    })
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message })
   }
-};
+}
 export const deleteSale = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params
 
   try {
-    const sale = await Sale.findByPk(id);
+    const sale = await Sale.findByPk(id)
     if (!sale) {
-      return res.status(404).json({ message: "Sale not found" });
+      return res.status(404).json({ message: 'Sale not found' })
     }
 
-    await sale.destroy();
+    await sale.destroy()
 
-    return res.status(200).json({ message: "Sale deleted successfully" });
+    return res.status(200).json({ message: 'Sale deleted successfully' })
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message })
   }
-};
+}
