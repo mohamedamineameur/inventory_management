@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import { randomUUID } from 'crypto';
+import fs from 'fs'
+import path from 'path'
+import { randomUUID } from 'crypto'
 
-const uploadDir = './uploads';
+const uploadDir = './uploads'
 
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir)
 }
 
 /**
@@ -14,15 +14,15 @@ if (!fs.existsSync(uploadDir)) {
  * @returns {string} - Le nom de fichier unique enregistré.
  */
 export default function storeFileAndReturnName(file) {
-    if (!file || !file.buffer || !file.originalname) {
-        throw new Error("Fichier invalide");
-    }
+  if (!file || !file.buffer || !file.originalname) {
+    throw new Error('Fichier invalide')
+  }
 
-    const ext = path.extname(file.originalname);
-    const uniqueName = `${randomUUID()}${ext}`;
-    const filePath = path.join(uploadDir, uniqueName);
+  const ext = path.extname(file.originalname)
+  const uniqueName = `${randomUUID()}${ext}`
+  const filePath = path.join(uploadDir, uniqueName)
 
-    fs.writeFileSync(filePath, file.buffer);
+  fs.writeFileSync(filePath, file.buffer)
 
-    return uniqueName;
+  return uniqueName
 }

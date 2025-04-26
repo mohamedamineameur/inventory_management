@@ -1,9 +1,8 @@
-import { requireRole } from "./policy.js";
+import { requireRole } from './policy.js'
 
 export const userPolicy = {
-    create: () => requireRole("admin"),
-    get: () => requireRole("admin"),
-    update: () => requireRole("admin"),
-    deleteUser: () => requireRole("admin")
-  };
-  
+  create: () => requireRole('admin'),
+  get: () => requireRole('admin'),
+  update: () => requireRole('admin'),
+  deleteUser: () => requireRole('admin')
+}
