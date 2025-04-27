@@ -6,7 +6,7 @@ export interface Item {
     description: string;
     price: number;
     categoryId: string;
-    file: any;
+    
 }
 
 export function itemService() {

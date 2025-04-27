@@ -1,7 +1,6 @@
 import { User } from "./models/user.model.js";
 import dotenv from "dotenv";
 import bycrypt from "bcrypt";
-import e from "express";
 dotenv.config();
 const saltRounds = parseInt(process.env.saltRounds) || 10;
 
