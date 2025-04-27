@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import { database } from './src/database/database.js'
 import mainRouter from './src/routes/main.route.js'
+import {defaultUser} from './src/default.js'
 
 dotenv.config()
 const app = express()
@@ -26,7 +27,8 @@ app.get('/', (req, res) => {
 
 database
   .sync()
-  .then(() => {
+  .then(async() => {
+    await defaultUser()
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`)
     })

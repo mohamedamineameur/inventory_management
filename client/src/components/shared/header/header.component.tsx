@@ -9,7 +9,7 @@ export function Header() {
                     <InventoryIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Inventory Management
+                    Inventory Managements
                 </Typography>
             </Toolbar>
         </AppBar>

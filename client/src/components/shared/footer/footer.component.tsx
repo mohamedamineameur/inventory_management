@@ -22,7 +22,7 @@ export function Footer() {
                     </Link>{' '}
                     |{' '}
                     <Link href="/terms-of-service" color="inherit" underline="hover">
-                        Terms of Service
+                        Terms of Services
                     </Link>
                 </Typography>
             </Container>
