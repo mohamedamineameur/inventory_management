@@ -3,12 +3,10 @@ import {
     Typography,
     Button,
     Grid,
-    Paper,
     Stack,
     Card,
     CardContent,
-    CardHeader,
-    Divider
+    CardHeader    
   } from '@mui/material';
   import InventoryIcon from '@mui/icons-material/Inventory';
   import CategoryIcon from '@mui/icons-material/Category';
