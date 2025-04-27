@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: ✨ Run Prettier (server)
-        run: npm run prettier
+        run: npm run prettier -- --write
 
       - name: 🔍 Run Linter (server)
         run: npm run lint
@@ -50,7 +50,7 @@ jobs:
         run: npm ci
 
       - name: ✨ Run Prettier (client)
-        run: npm run prettier
+        run: npm run prettier -- --write
 
       - name: 🔍 Run Linter (client)
         run: npm run lint
