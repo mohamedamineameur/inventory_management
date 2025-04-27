@@ -2,11 +2,11 @@ import { Item, Category } from '../models/index.model.js'
 import storeFileAndReturnName from '../upload.js'
 
 export const createItem = async (req, res) => {
-  const { name, description, price, categoryId, file } = req.body
+  const { name, description, price, categoryId } = req.body
   let pictureURL = null
-  if (file) {
-    const pictureURLs = await storeFileAndReturnName(file)
-    pictureURL = pictureURLs
+
+  if (req.file) {
+    pictureURL = await storeFileAndReturnName(req.file)
   }
 
   const category = await Category.findByPk(categoryId)
@@ -31,6 +31,7 @@ export const createItem = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
 
 export const getItems = async (req, res) => {
   try {

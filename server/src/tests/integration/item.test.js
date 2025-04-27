@@ -4,6 +4,13 @@ import { createCategoryFixture } from '../fixtures/category.fixture.js'
 import { itemFixture } from '../fixtures/item.fixture.js'
 import { loginFixture } from '../fixtures/login.fixture.js'
 import { enableDatabase } from '../setup.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import fs from 'fs'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 
 describe('GET /api/items', () => {
   it('should return all items for authenticated user', async () => {
@@ -25,17 +32,17 @@ describe('POST /api/items', () => {
     await enableDatabase()
     const category = await createCategoryFixture()
     const loginResponse = await loginFixture()
-
+    const testImagePath = path.resolve(__dirname, '../../assets/test.png')
     const response = await request(app)
       .post('/api/items')
       .set('Cookie', loginResponse.cookie)
-      .send({
-        name: 'New Item',
-        description: 'Item Description',
-        price: 10.0,
-        categoryId: category.id
-      })
+      .field('name', 'New Item')
+      .field('description', 'Item Description')
+      .field('price', '10.0')
+      .field('categoryId', category.id)
+      .attach('image', testImagePath) 
       .expect(201)
+
 
     expect(response.body).toHaveProperty('item')
     expect(response.body.item).toHaveProperty('id')
