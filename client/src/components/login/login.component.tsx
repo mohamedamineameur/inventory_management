@@ -3,6 +3,7 @@ import { useState } from "react";
 import { userService } from "../../services/user.service";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { extractApiErrorMessage } from "../../utils/handle-api-error";
 
 export function Login() {
     const [username, setUsername] = useState("");
@@ -20,11 +21,9 @@ export function Login() {
         try {
         response = await userService().login(username, password);
         console.log(response.data);
-        } catch (err:any) {
-            const message =
-            err?.response?.data?.message || err?.message || "Erreur inconnue";
-          setError(message);
-        }
+        } catch (err: unknown) {
+            setError(extractApiErrorMessage(err));
+          }
     };
     
     return (
