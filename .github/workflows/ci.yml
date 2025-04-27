@@ -1,4 +1,4 @@
-name: CI - Lint, Prettier, Test
+name: CI - Lint, Prettier
 
 on:
   push:
@@ -7,13 +7,12 @@ on:
     branches: ["**"]
 
 jobs:
-  build:
+  server-checks:
+    name: 🔧 Server - Lint & Prettier
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: server
-
     steps:
       - name: 📦 Checkout code
         uses: actions/checkout@v3
@@ -23,12 +22,35 @@ jobs:
         with:
           node-version: '20'
 
-      - name: 📥 Install dependencies
+      - name: 📥 Install server dependencies
         run: npm ci
 
-      - name: ✨ Run Prettier
+      - name: ✨ Run Prettier (server)
         run: npm run prettier
 
-      - name: 🔍 Run Linter
+      - name: 🔍 Run Linter (server)
         run: npm run lint
 
+  client-checks:
+    name: 🎨 Client - Lint & Prettier
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 📥 Install client dependencies
+        run: npm ci
+
+      - name: ✨ Run Prettier (client)
+        run: npm run prettier
+
+      - name: 🔍 Run Linter (client)
+        run: npm run lint
