@@ -2,10 +2,9 @@ name: CI - Lint, Prettier
 
 on:
   push:
-    branches: ["**"]
-  pull_request:
-    branches: ["**"]
-
+    branches-ignore:
+      - main
+      - master
 jobs:
   server-checks:
     name: 🔧 Server - Lint & Prettier
