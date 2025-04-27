@@ -1,30 +1,32 @@
 import { Container, Paper, Typography, TextField, Box, Button } from "@mui/material";
 import { useState } from "react";
-import { userService } from "../../services/user.service";
+import { useAuth } from "../../contexts/AuthContext";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { extractApiErrorMessage } from "../../utils/handle-api-error";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [hiden, setHiden] = useState(true);
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handlePasswordVisibility = () => {
         setHiden(!hiden);
     };
     
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        let response;
-        try {
-        response = await userService().login(username, password);
-        console.log(response.data);
-        } catch (err: unknown) {
-            setError(extractApiErrorMessage(err));
-          }
-    };
+      const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await login(username, password);
+      navigate("/"); 
+    } catch (err: unknown) {
+      setError(extractApiErrorMessage(err));
+    }
+  };
     
     return (
         <Container maxWidth="xs" sx={{ mt: 8, height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>

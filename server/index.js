@@ -13,7 +13,17 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT
 
-app.use(cors())
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  }));
+} else {
+  // En production : même domaine → pas besoin de CORS
+  app.use(cors({
+    credentials: true
+  }));
+}
 app.use(helmet())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
