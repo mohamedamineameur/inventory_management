@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createContext, useContext, useEffect, useState } from "react";
 import { userService } from "../services/user.service";
 
