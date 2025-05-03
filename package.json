@@ -1,0 +1,9 @@
+{
+    "name": "fullstack-inventory",
+    "scripts": {
+      "install": "cd client && npm install && cd ../server && npm install",
+      "build": "cd client && npm run build",
+      "start": "cd server && node index.js"
+    }
+  }
+  
