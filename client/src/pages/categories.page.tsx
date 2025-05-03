@@ -2,7 +2,7 @@ import { Typography, Box } from '@mui/material';
 
 export function CategoriesPage() {
   return (
-    <Box p={4}>
+    <Box p={4} sx={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
       <Typography variant="h4" gutterBottom>
         Categories Management
       </Typography>

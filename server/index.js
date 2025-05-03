@@ -8,6 +8,10 @@ import cookieParser from 'cookie-parser'
 import { database } from './src/database/database.js'
 import mainRouter from './src/routes/main.route.js'
 import {defaultUser} from './src/default.js'
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config()
 const app = express()
@@ -15,7 +19,7 @@ const PORT = process.env.PORT
 
 if (process.env.NODE_ENV === 'development') {
   app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5174',
     credentials: true
   }));
 } else {
@@ -29,11 +33,23 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(compression())
-app.use('/api', mainRouter)
+// Routes API toujours avant le frontend
+app.use('/api', mainRouter);
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the API!')
-})
+// 💡 Empêche express.static d'interpréter un mauvais fichier
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// Catch-all React seulement pour le reste
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/assets')) {
+    res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
+  } else {
+    next();
+  }
+});
+
+
+
 
 database
   .sync()
